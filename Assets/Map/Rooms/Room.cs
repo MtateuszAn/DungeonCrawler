@@ -17,9 +17,10 @@ public class Room : MonoBehaviour
 {
     [SerializeField] public int roomWidth;
     [SerializeField] public int roomHeight;
-    [SerializeField] List<Transform> doorList;
+    [SerializeField] public List<Transform> doorList;
     [SerializeField] public List<Transform> floorList;
     [SerializeField] public Transform spawnPoint;
+    [SerializeField] public List<Transform> enemySpawnPoits;
     public List<Door> doors = new List<Door>();
     public List<Door> floors = new List<Door>();
 

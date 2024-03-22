@@ -5,29 +5,33 @@ using UnityEngine;
 public class Coridor : MonoBehaviour
 {
     [SerializeField] GameObject wall;
+    public MapGrid map;
 
-    private void Awake()
+    Quaternion spawnRotation90 = Quaternion.Euler(0, 90, 0);
+    Quaternion spawnRotationM90 = Quaternion.Euler(0, -90, 0);
+    Quaternion spawnRotation180 = Quaternion.Euler(0, 180, 0);
+    int x;
+    int z;
+
+    private void Start()
     {
-        Quaternion spawnRotation90 = Quaternion.Euler(0, 90, 0);
-        Quaternion spawnRotationM90 = Quaternion.Euler(0, -90, 0);
-        Quaternion spawnRotation180 = Quaternion.Euler(0, 180, 0);
-        int x = (int)transform.position.x/2;
-        int z = (int)transform.position.z/2;
 
-        MapGrid map = MapGrid.instance;
+        x = (int)transform.position.x / 2;
+        z = (int)transform.position.z / 2;
 
         //gora
-        if (!map.grid[x,z+1].isTaken)
+        if (!map.grid[x, z + 1].isTaken)
             Instantiate(wall, transform.position + new Vector3(0, 0, 1), transform.rotation);
-
         //dol
         if (!map.grid[x, z - 1].isTaken)
             Instantiate(wall, transform.position + new Vector3(0, 0, -1), spawnRotation180);
         //prawo
-        if (!map.grid[x + 1, z ].isTaken)
+        if (!map.grid[x + 1, z].isTaken)
             Instantiate(wall, transform.position + new Vector3(1, 0, 0), spawnRotation90);
         //lewo
         if (!map.grid[x - 1, z].isTaken)
             Instantiate(wall, transform.position + new Vector3(-1, 0, 0), spawnRotationM90);
+
     }
+
 }

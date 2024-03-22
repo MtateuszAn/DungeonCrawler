@@ -12,6 +12,7 @@ public class Edge
 
     public float weight;
 
+    
     public Edge(GridElement start, GridElement end)
     {
         Start = start;
@@ -19,27 +20,6 @@ public class Edge
         weight = (float)Math.Sqrt(((start.x - end.x)* (start.x - end.x)) +((start.z - end.z)* (start.z - end.z)));
     }
 
-    // Implementacja Equals oraz GetHashCode dla porównywania krawêdzi
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-
-        Edge other = (Edge)obj;
-        return (Start.Equals(other.Start) && End.Equals(other.End)) ||
-               (Start.Equals(other.End) && End.Equals(other.Start));
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            int hash = 17;
-            hash = hash * 23 + Start.GetHashCode();
-            hash = hash * 23 + End.GetHashCode();
-            return hash;
-        }
-    }
     public bool HasVertex(GridElement point)
     {
         return Start.Equals(point) || End.Equals(point);
@@ -75,11 +55,6 @@ public class Triangle
         return Edges.Contains(edge);
     }
 
-    public bool HasVertex(GridElement point)
-    {
-        return A.Equals(point) || B.Equals(point) || C.Equals(point);
-    }
-
     public bool ContainsPoint(GridElement p)
     {
         double denominator = ((B.z - C.z) * (A.x - C.x) + (C.x - B.x ) * (A.z - C.z));
@@ -92,10 +67,9 @@ public class Triangle
 }
 public static class FindPath
 {
-    
-    public static List<Edge> BowyerWatsonDelaunayTriangulation()
+
+    public static List<Edge> BowyerWatsonDelaunayTriangulation(List<GridElement> points)
     {
-        List<GridElement> points = MapGrid.instance.dorrs;
 
         // Tworzymy pocz¹tkowy trójk¹t, zawieraj¹cy wszystkie punkty
         double maxX = double.MinValue, maxY = double.MinValue, minX = double.MaxValue, minY = double.MaxValue;
@@ -123,7 +97,7 @@ public static class FindPath
 
         List<Triangle> triangles = new List<Triangle>();
         triangles.Add(new Triangle(p1, p2, p3));
-        
+
         // Dodajemy punkty i aktualizujemy triangulacjê
         foreach (var point in points)
         {
@@ -184,7 +158,7 @@ public static class FindPath
                 edgesWithoutSuper.Add(edge);
             }
         }
-        
+
         return edgesWithoutSuper;
     }
 
@@ -200,15 +174,6 @@ public static class FindPath
         do
         {
             empty = false;
-            /*foreach (var edge in edges)
-            {
-                if(visited.Contains(edge.Start) && !visited.Contains(edge.End))
-                {
-                    visited.Add(edge.End);
-                    bestEdges.Add(edge);
-                    empty=true;
-                }
-            }*/
             GridElement visitedEnd = null;
             Edge best = null;
             foreach( Edge edge in edges.Where( n=> visited.Contains(n.Start) && !visited.Contains(n.End) ))

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7624370132495995903}
   - component: {fileID: 8592086501477588596}
   m_Layer: 3
-  m_Name: Filler
+  m_Name: fdor
   m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f3f3a5f7561637b47ba8be11d8e65c2d, type: 2}
+  - {fileID: 2100000, guid: a4685c866917e2b45bfc15d55f3860bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

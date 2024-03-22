@@ -238,6 +238,7 @@ MonoBehaviour:
   - {fileID: 6026392880614068494}
   - {fileID: 3168363580384657375}
   spawnPoint: {fileID: 8021670090285846648}
+  enemySpawnPoits: []
 --- !u!1001 &118940275413934125
 PrefabInstance:
   m_ObjectHideFlags: 0

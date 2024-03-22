@@ -10,6 +10,7 @@ public class RoomsManager : MonoBehaviour
     [SerializeField] GameObject filler;
     [SerializeField] GameObject coriddor;
     MapGrid mapGrid;
+    EnemieSpawnScript enemieSpawnScript;
     [SerializeField] private int numberOfRooms;
     private int bigestSize=1;
 
@@ -17,7 +18,8 @@ public class RoomsManager : MonoBehaviour
 
     void Start()
     {
-        mapGrid = MapGrid.instance;
+        enemieSpawnScript = GetComponent<EnemieSpawnScript>();
+        mapGrid = GetComponent<MapGrid>();
         mapGrid.InitializeMap();
 
         foreach (Room room in rooms)
@@ -40,10 +42,25 @@ public class RoomsManager : MonoBehaviour
         }
 
         mapGrid.UpdateGridFlorsDors();
-        mapGrid.BuildCoridors2(coriddor);
+        UpdateDoors();
+        mapGrid.BuildCoridors(coriddor);
         mapGrid.FillRest(filler);
+        mapGrid.initializeSpawnPoints();
         mapGrid.SpawnPlayer();
-        MapGrid.instance.e_EndEvent.Invoke();
+        mapGrid.CreateNavMesh();
+        enemieSpawnScript.Spawn();
+
+    }
+
+    private void UpdateDoors()
+    {
+        foreach(Room rom in mapGrid.rooms)
+        {
+            foreach(Transform en in rom.doorList)
+            {
+                en.gameObject.GetComponent<Entrance>().map = mapGrid;
+            }
+        }
     }
 
 }
