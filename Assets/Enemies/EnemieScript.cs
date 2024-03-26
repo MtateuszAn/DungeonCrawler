@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemieScript : MonoBehaviour
 {
@@ -13,9 +16,17 @@ public class EnemieScript : MonoBehaviour
 
     [SerializeField] public LayerMask targetMask;
     [SerializeField] public LayerMask obsticleMask;
+    [SerializeField] public float radius360vision;
     [SerializeField] public float fovRadius;
     [SerializeField][Range(0, 360)] public float angle;
-    
+
+    [SerializeField] Renderer model;
+    [SerializeField] Material materialIdle;
+    [SerializeField] Material materialPatrol;
+    [SerializeField] Material materialHunt;
+
+    [SerializeField] float memorySec = 3;
+    float lastSeenPlayer= -99;
 
     void Start()
     {
@@ -67,14 +78,28 @@ public class EnemieScript : MonoBehaviour
 
     void UpdateIdleBehavior()
     {
-        // Zachowanie dla stanu 1
-        Debug.Log("Stan 1");
+        model.material = materialIdle;
     }
-
+    float r;
     void UpdateHuntBehavior()
     {
-        
-        Debug.Log("Hunt");
+        model.material = materialHunt;
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            agent.updateRotation = false;
+            Vector3 dir = player.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            var rotation = lookRotation.eulerAngles;
+            float Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotation.y, ref r, 0.01f);
+            transform.rotation = Quaternion.Euler(0f, Angle, 0f);
+        }
+        else
+        {
+            agent.updateRotation = true;
+        }
+
+
+
         if (player != null)
         {
             agent.SetDestination(player.position);
@@ -87,7 +112,8 @@ public class EnemieScript : MonoBehaviour
 
     void UpdatePatrolBehavior() // sorce https://github.com/JonDevTutorial/RandomNavMeshMovement/blob/main/RandomMovement.cs
     {
-        Debug.Log("Patrol");
+        model.material = materialPatrol;
+        //Debug.Log("Patrol");
         if (agent.remainingDistance <= agent.stoppingDistance) //done with path
         {
             Vector3 point;
@@ -130,27 +156,62 @@ public class EnemieScript : MonoBehaviour
 
     void FieldOfViewCheck()
     {
-        Vector3 position = transform.position+ new Vector3(0,1,0);
-        Collider[] rangeChecks = Physics.OverlapSphere(position,targetMask);
-        
-        if(rangeChecks.Length !=0 )
+
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position+ new Vector3(0,1,0),fovRadius,targetMask);
+        if (rangeChecks.Length !=0 )
         {
             Transform target = rangeChecks[0].transform;
-            Vector3 directionToTarget = (player.position - position).normalized;
+            Vector3 directionToTarget = (player.position - transform.position).normalized;
+
+            //Debug.Log("gracz w kolko");
 
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
             {
-                float distanceToTarget = Vector3.Distance(position, target.position);
-
-                if (!Physics.Raycast(position, directionToTarget, distanceToTarget, obsticleMask))
+                float distanceToTarget = Vector3.Distance(transform.position, target.position);
+                
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obsticleMask))
+                {
+                    lastSeenPlayer = Time.time;
                     currentState = EnemyState.Hunt;
+                    return;
+                }
                 else
-                    currentState = EnemyState.Idle;
+                {
+                    Memory();
+                }
+                    
             }
             else
-                currentState = EnemyState.Idle;
+            {
+                Memory();
+            }
+                
         }
         else if(currentState == EnemyState.Hunt)
-            currentState = EnemyState.Idle;
+            Memory();
+
+        rangeChecks = Physics.OverlapSphere(transform.position + new Vector3(0, 1, 0), radius360vision, targetMask);
+        if (rangeChecks.Length != 0)
+        {
+            Transform target = rangeChecks[0].transform;
+            Vector3 directionToTarget = (player.position - transform.position).normalized;
+            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+            if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obsticleMask))
+            {
+                lastSeenPlayer = Time.time;
+                currentState = EnemyState.Hunt;
+                return;
+            }
+        }
+    }
+
+    void Memory()
+    {
+        Debug.Log("MEM");
+        if(lastSeenPlayer < Time.time - memorySec) 
+        {
+            currentState = EnemyState.Patrol;
+        }
     }
 }

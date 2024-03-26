@@ -354,7 +354,7 @@ MonoBehaviour:
   filler: {fileID: 5095389501227935031, guid: bd4f94209b89cff49a461f2d00cdcce2, type: 3}
   coriddor: {fileID: 6407862864509382249, guid: c5a13b62c3076fb45b1ee9c7ff223529,
     type: 3}
-  numberOfRooms: 2
+  numberOfRooms: 800
 --- !u!114 &1612652555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,8 +374,8 @@ MonoBehaviour:
   seeAll: 0
   spawnPoints: []
   enemySpawnPoints: []
-  gridHeight: 20
-  gridWidth: 20
+  gridHeight: 80
+  gridWidth: 80
   rooms: []
 --- !u!4 &1612652556
 Transform:
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listOfEnemies:
   - {fileID: 8008751682540648596, guid: f96fbf682cc91394395477adec21115f, type: 3}
-  numberOfEnemies: 1
+  numberOfEnemies: 45
 --- !u!1 &1934887073 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3739424624111044673, guid: a8dd8845bb5bf3042bf1ec611d1e663d,
