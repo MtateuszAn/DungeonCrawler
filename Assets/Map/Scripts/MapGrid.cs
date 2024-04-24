@@ -330,7 +330,7 @@ public class MapGrid : MonoBehaviour
 
                 if (curent == end)
                 {
-                    Debug.Log("jest droga");
+                    //Debug.Log("jest droga");
                     return curent;
                 }
 

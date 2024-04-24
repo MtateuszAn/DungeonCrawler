@@ -26,10 +26,12 @@ public class EnemieScript : MonoBehaviour
     [SerializeField] Material materialHunt;
 
     [SerializeField] float memorySec = 3;
+    [SerializeField] float maxHealth = 100;
     float lastSeenPlayer= -99;
-
+    float health;
     void Start()
     {
+        health = maxHealth;
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("/PlayerPrefab/Player").transform;
         StartCoroutine(EnemyRutine());
@@ -40,6 +42,18 @@ public class EnemieScript : MonoBehaviour
         StopCoroutine(EnemyRutine());
         StopCoroutine(FOVRutine());
     }
+
+    public void takeDamage(float damage)
+    {
+        lastSeenPlayer = Time.time;
+        currentState = EnemyState.Hunt;
+        health -= damage;
+        if (health < 0) { 
+            StopAllCoroutines();
+            GameObject.Destroy(gameObject);
+        }
+    }
+
     public enum EnemyState
     {
         Idle,
@@ -106,7 +120,7 @@ public class EnemieScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("Nie ma gracza");
+            //Debug.Log("Nie ma gracza");
         }
     }
 
@@ -208,7 +222,7 @@ public class EnemieScript : MonoBehaviour
 
     void Memory()
     {
-        Debug.Log("MEM");
+        //Debug.Log("MEM");
         if(lastSeenPlayer < Time.time - memorySec) 
         {
             currentState = EnemyState.Patrol;
