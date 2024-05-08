@@ -360,6 +360,41 @@ PrefabInstance:
       propertyPath: allAvailableSpawnPoints
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
+        type: 3}
+      propertyPath: rooms.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
+        type: 3}
+      propertyPath: rooms.Array.data[4]
+      value: 
+      objectReference: {fileID: 8685173641873804982, guid: b7a5703edbf80ec4c9ee023c73684a48,
+        type: 3}
+    - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
+        type: 3}
+      propertyPath: rooms.Array.data[5]
+      value: 
+      objectReference: {fileID: 8685173641873804982, guid: 87e932d23bb9fd648b1e9110ee3e3c4c,
+        type: 3}
+    - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
+        type: 3}
+      propertyPath: rooms.Array.data[6]
+      value: 
+      objectReference: {fileID: 8685173641873804982, guid: c47d754309f713546bdf411ae909c677,
+        type: 3}
+    - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
+        type: 3}
+      propertyPath: rooms.Array.data[7]
+      value: 
+      objectReference: {fileID: 8685173641873804982, guid: 0d5e469f46127fd4a8b2cdb13d42d3b8,
+        type: 3}
+    - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
+        type: 3}
+      propertyPath: rooms.Array.data[8]
+      value: 
+      objectReference: {fileID: 8685173641873804982, guid: 7d49c1cdd14b59b4683594ed87c03bc1,
+        type: 3}
     - target: {fileID: 8833422194220818596, guid: fdbba19cc401da148a53be1118679a2d,
         type: 3}
       propertyPath: gridWidth
