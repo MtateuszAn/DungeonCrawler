@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+
 
 public class PlayerMovment : MonoBehaviour
 {
@@ -15,8 +18,13 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField] float mass = 2f; // Mas of player for gravitation
     [SerializeField] float acceleration = 20f; //Value for smooth start and stop when moving
     [SerializeField] Image healthBar;
+    [SerializeField] Image exitBar;
     [SerializeField] float maxHealth = 100;
     float health;
+    float secToExit=10;
+    [SerializeField] GameObject deathPanel;
+
+    static public bool alive = true;
 
     InputAction lookAction;//Input Action from Player action Map
 
@@ -27,6 +35,7 @@ public class PlayerMovment : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        alive = true;
         health = maxHealth;
         Cursor.lockState = CursorLockMode.Locked;
         controller = GetComponent<CharacterController>();
@@ -38,8 +47,15 @@ public class PlayerMovment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateWalk();
-        UpdateLook();
+        if (alive)
+        {
+            UpdateWalk();
+            UpdateLook();
+        }
+        else
+        {
+            ToMenu();
+        }
     }
     void UpdateGravity()
     {
@@ -75,6 +91,15 @@ public class PlayerMovment : MonoBehaviour
     {
         health-= damage;
         healthBar.fillAmount = health/maxHealth;
+        if (health <= 0)
+        {
+            alive = false;
+            Death();
+        }
+    }
+    void Death()
+    {
+        deathPanel.SetActive(true);
     }
     void UpdateLook()
     {
@@ -87,5 +112,19 @@ public class PlayerMovment : MonoBehaviour
         //Roteiting camera and player
         cameraTransform.localRotation = Quaternion.Euler(-look.y, 0, 0);
         transform.localRotation = Quaternion.Euler(0, look.x, 0);
+    }
+    public void ToMenu()
+    {
+        if(secToExit>0)
+        {
+            secToExit -= Time.deltaTime;
+            exitBar.fillAmount= secToExit/10;
+        }
+        else
+        {
+            Debug.Log("KONIEC");
+            SceneManager.LoadSceneAsync(0);
+        }
+
     }
 }

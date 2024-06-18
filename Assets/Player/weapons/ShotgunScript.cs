@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class ShotgunScript : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class ShotgunScript : MonoBehaviour
     }
     private void Reload()
     {
-        if (!gunBusy)
+        if (!gunBusy && PlayerMovment.alive)
         {
             gunBusy = true;
             animator.SetTrigger("Reload");
@@ -68,7 +69,7 @@ public class ShotgunScript : MonoBehaviour
 
     private void Shoot()
     {
-        if (!gunBusy && !gunInWall && amunition>0)
+        if (!gunBusy && !gunInWall && amunition>0 && PlayerMovment.alive)
         {
             RaycastHit raycastHit;
             gunBusy = true;
@@ -118,7 +119,6 @@ public class ShotgunScript : MonoBehaviour
         gunBusy = false;
             amunition = 2;
     }
-
 
     public void OnShootAnimationEnd()
     {
