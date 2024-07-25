@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class RoomsManager : MonoBehaviour
 {
+    [SerializeField] int seed = 0;
     [SerializeField] List<Room> rooms;
     [SerializeField] List<Room> spawnRooms;
-    [SerializeField] GameObject filler;
     [SerializeField] GameObject coriddor;
     MapGrid mapGrid;
     EnemieSpawnScript enemieSpawnScript;
@@ -18,6 +18,12 @@ public class RoomsManager : MonoBehaviour
 
     void Start()
     {
+        if (seed == 0)
+        {
+            seed = Random.Range(0,int.MaxValue);
+            Debug.Log("Seed: " + seed);
+        }
+        Random.seed = seed;
         enemieSpawnScript = GetComponent<EnemieSpawnScript>();
         mapGrid = GetComponent<MapGrid>();
         mapGrid.InitializeMap();
@@ -29,6 +35,7 @@ public class RoomsManager : MonoBehaviour
             if(bigestSize < room.roomWidth)
                 bigestSize = room.roomWidth;
         }
+        //Place Spawn Room
         bool isSpawn = false;
         while(!isSpawn)
         {
@@ -36,15 +43,37 @@ public class RoomsManager : MonoBehaviour
             //Debug.Log("SpawnProba");
         }
 
+        //place rooms
+        int failedAttempts = 0;
         for (int x = 0; x < numberOfRooms; x++)
         {
-            mapGrid.GenerateRoom(Random.Range(3, mapGrid.gridWidth - bigestSize), Random.Range(3, mapGrid.gridHeight - bigestSize), false, rooms[Random.Range(0, rooms.Count)]);
+            Room room = rooms[Random.Range(0, rooms.Count)];
+            int gridW = Random.Range(3, mapGrid.gridWidth - bigestSize);
+            int gridH = Random.Range(3, mapGrid.gridHeight - bigestSize);
+            bool success = false;
+            do
+            {
+                success = mapGrid.GenerateRoom(gridW, gridH, false, room);
+                failedAttempts++;
+                if (failedAttempts >= 10000)
+                {
+                    Debug.LogError("Failed to generate room");
+                    failedAttempts = 0;
+                    break;
+                }
+                gridW++;
+                if (gridW >= mapGrid.gridWidth - bigestSize)
+                {
+                    gridW = 3;
+                    gridH++;
+                }
+                if (gridH >= mapGrid.gridHeight - bigestSize) gridH = 3;
+            } while (success != true);
         }
 
         mapGrid.UpdateGridFlorsDors();
         UpdateDoors();
         mapGrid.BuildCoridors(coriddor);
-        mapGrid.FillRest(filler);
         mapGrid.initializeSpawnPoints();
         mapGrid.SpawnPlayer();
         mapGrid.CreateNavMesh();

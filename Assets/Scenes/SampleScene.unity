@@ -341,6 +341,21 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 6592908169e6be7468255052df15a95b, type: 2}
+    - target: {fileID: 1024441442755574236, guid: a8dd8845bb5bf3042bf1ec611d1e663d,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024441442755574236, guid: a8dd8845bb5bf3042bf1ec611d1e663d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024441442755574236, guid: a8dd8845bb5bf3042bf1ec611d1e663d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -199.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1380510995734444963, guid: a8dd8845bb5bf3042bf1ec611d1e663d,
         type: 3}
       propertyPath: m_Name
@@ -608,6 +623,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
         type: 3}
+      propertyPath: seed
+      value: 213321
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
+        type: 3}
+      propertyPath: numberOfRooms
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906338803429048681, guid: fdbba19cc401da148a53be1118679a2d,
+        type: 3}
       propertyPath: rooms.Array.size
       value: 9
       objectReference: {fileID: 0}
@@ -644,12 +669,12 @@ PrefabInstance:
     - target: {fileID: 8833422194220818596, guid: fdbba19cc401da148a53be1118679a2d,
         type: 3}
       propertyPath: gridWidth
-      value: 50
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8833422194220818596, guid: fdbba19cc401da148a53be1118679a2d,
         type: 3}
       propertyPath: gridHeight
-      value: 50
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 8833422194220818596, guid: fdbba19cc401da148a53be1118679a2d,
         type: 3}

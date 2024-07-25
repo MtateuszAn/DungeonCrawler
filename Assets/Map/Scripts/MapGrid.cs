@@ -113,28 +113,6 @@ public class MapGrid : MonoBehaviour
             }
         }
     }
-    public void FillRest(GameObject filler)
-    {
-        foreach (var item in grid)
-        {
-            if (!item.isTaken == true)
-            {
-                Instantiate(filler, item.GetGridWP(), gameObject.transform.rotation);
-            }
-            if (item.isDoor == true)
-            {
-                //Instantiate(Door, item.GetGridWP(), gameObject.transform.rotation);
-            }
-            if (item.isCoridor == true)
-            {
-                // Instantiate(Coridor, item.GetGridWP(), gameObject.transform.rotation);
-            }
-            if (item.isTaken == true && !item.isCoridor == true && !item.isDoor == true)
-            {
-                // Instantiate(Room, item.GetGridWP(), gameObject.transform.rotation);
-            }
-        }
-    }
 
     public bool GenerateRoom(int x, int z, bool rotate, Room room)
     {
@@ -274,7 +252,7 @@ public class MapGrid : MonoBehaviour
         foreach (var edge in minimumSpanningTree)
         {
             
-            if (!MakeCoridors(edge.Start, edge.End))
+            if (!MakeCoridorsDoorDoor(edge.Start, edge.End))
             {
                 Debug.Log("porazka");
             }
@@ -288,7 +266,7 @@ public class MapGrid : MonoBehaviour
         }
     }
     
-    bool MakeCoridors(GridElement gridStart, GridElement gridEnd)
+    bool MakeCoridorsDoorDoor(GridElement gridStart, GridElement gridEnd)
     {
         GridElement curr = FindShortestPathBFS(gridStart, gridEnd);
         List<GridElement> path = new List<GridElement>();
@@ -314,6 +292,33 @@ public class MapGrid : MonoBehaviour
         
         return true;
     }
+
+    /*bool MakeCoridorsDoorCoridor(GridElement gridStart)
+    {
+        GridElement curr = FindShortestPathBFS(gridStart);
+        List<GridElement> path = new List<GridElement>();
+        if (curr == gridStart)
+        {
+            return false;
+        }
+        while (curr != gridStart)
+        {
+            path.Add(curr);
+            curr = nodeParents[curr];
+        }
+        nodeParents.Clear();
+        foreach (GridElement node in path)
+        {
+            if (!grid[node.x / 2, node.z / 2].isTaken)
+            {
+                grid[node.x / 2, node.z / 2].isTaken = true;
+                grid[node.x / 2, node.z / 2].isCoridor = true;
+            }
+
+        }
+
+        return true;
+    }*/
 
     public GridElement FindShortestPathBFS(GridElement start, GridElement end)
     {
@@ -355,6 +360,7 @@ public class MapGrid : MonoBehaviour
         Debug.Log("nie jest dzwiami");
         return start;
     }
+
     IList<GridElement> GetWalkableNodes(GridElement curr, GridElement start, GridElement end)
     {
 
@@ -385,7 +391,7 @@ public class MapGrid : MonoBehaviour
         }
         foreach (GridElement node in possibleNodes)
         {
-            if (((!node.isTaken || node.isCoridor || node == end)))
+            if (node.isCoridor || !node.isTaken || node == end)
             {
                 walkableNodes.Add(node);
             }
