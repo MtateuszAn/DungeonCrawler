@@ -79,7 +79,7 @@ public class EnemieScript : MonoBehaviour
         if (distance < 2.2f) // Check if the distance is less than 2 units
         {
             Debug.Log(distance);
-            player.GetComponent<PlayerMovment>().TakeDamage(damage);
+            player.GetComponent<PlayerHealth>().TakeDamage(damage);
         }
     }
 

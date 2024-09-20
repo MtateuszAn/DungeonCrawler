@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58e0e353adeb0084c846893cba7e200f, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  itemID: 1
+  itemName: ShotGun
+  icon: {fileID: 21300000, guid: fb4ad4b0a135fe64f9e3c2168e96d1b3, type: 3}
+  uiWidth: 8
+  uiHeight: 2
+  itemPrefab: {fileID: 6921139551770280490, guid: 768843c0a32c8d54aa7ee743dfc75cfb,
+    type: 3}
+  itemHoldPrefab: {fileID: 731548836757946975, guid: a511814070d3c574592620a74e8b7ead,
+    type: 3}
+  maxBuletsInMag: 2
+  range: 21
+  damage: 100
+  spreed: 0.13
+  numberOfBuletsPerShot: 12

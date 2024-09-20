@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,122 +11,122 @@ using UnityEngine.UI;
 
 public class PlayerMovment : MonoBehaviour
 {
-    CharacterController controller;
-    PlayerInput playerInput;
+    public static PlayerMovment Instance;
 
-    public Transform cameraTransform; // Camera pozition And rotation
-    [SerializeField] float mouseSensitivity = 3f; //Sensitivity of player looking around
     [SerializeField] float movementSpeed = 9f; //Spead of player walking
-    [SerializeField] float mass = 2f; // Mas of player for gravitation
-    [SerializeField] float acceleration = 20f; //Value for smooth start and stop when moving
-    [SerializeField] Image healthBar;
-    [SerializeField] Image exitBar;
-    [SerializeField] float maxHealth = 100;
-    float health;
-    float secToExit=10;
-    [SerializeField] GameObject deathPanel;
+    [SerializeField] float fallingSpeed = 9f; //Spead of player falling
+    [SerializeField] float sprintSpeedModyfier = 2f; //Aditional speed when sprinting
+    [SerializeField] float drag = 6f; // Mas of player for gravitation
+    [SerializeField] float movingFactorWhileFalling = 0.2f; // Mas of player for gravitation
+    //[SerializeField] float acceleration = 20f; //Value for smooth start and stop when moving
+    [SerializeField] float jumpForce = 5f; //Value for force of player jump
+    private float moveModyfier = 1;
 
-    static public bool alive = true;
+    public Rigidbody playerRigidbody;
+    PlayerInput playerInput;
+    public InputAction moveAction;
+    InputAction sprintAction;
+    public InputAction jumpAction;
+    private Action<InputAction.CallbackContext> jumpActionDelegate;
 
-    InputAction lookAction;//Input Action from Player action Map
+    [SerializeField] public Animator animator;
 
-    InputAction moveAction;
-
-    internal Vector3 velocity;
-    Vector2 look;//direction of player camera
-    // Start is called before the first frame update
+    [SerializeField] internal Vector3 velocity;
+    bool grounded = false;
+    bool wasGrounded = false;
+    
     void Start()
     {
-        alive = true;
-        health = maxHealth;
+        Instance = this;
         Cursor.lockState = CursorLockMode.Locked;
-        controller = GetComponent<CharacterController>();
+        playerRigidbody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        //animator = GetComponent<Animator>();
         moveAction = playerInput.actions["PlayerMovment"];
-        lookAction = playerInput.actions["PlayerLook"];
+        sprintAction = playerInput.actions["PlayerSprint"];
+        jumpAction = playerInput.actions["PlayerJump"];
+        jumpActionDelegate = ctx => PlayerJump();
+        jumpAction.performed += jumpActionDelegate;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        if (alive)
+        playerRigidbody.drag = drag;
+    }
+    private void OnDestroy()
+    {
+        jumpAction.performed -= jumpActionDelegate;
+    }
+    public void UpdateGravity()
+    {
+        grounded = Physics.Raycast(transform.position-new Vector3(0,0.9f,0),Vector3.down,0.2f);
+        if(grounded!=wasGrounded)
         {
-            UpdateWalk();
-            UpdateLook();
+            GroundedStateChange();
+            wasGrounded = grounded;
+        }
+
+        if (!grounded)
+        {
+            playerRigidbody.drag = 0.1f;
+            playerRigidbody.AddForce(Vector3.down * fallingSpeed, ForceMode.Acceleration);
+            //Debug.Log(playerRigidbody.velocity.y);
+            if(playerRigidbody.velocity.y < -10 && !PlayerStateManager.Instance.isRagdoll)
+            {
+                PlayerStateManager.Instance.StartRagdollAction.Invoke();
+            }
         }
         else
         {
-            ToMenu();
+            playerRigidbody.drag = drag;
         }
     }
-    void UpdateGravity()
+
+    private void GroundedStateChange()
     {
-        var gravity = Physics.gravity * mass * Time.deltaTime;
-        velocity.y = controller.isGrounded ? -1f : velocity.y + gravity.y;
+        //just Landed
+        if (grounded)
+        {
+            //Debug.Log("LANDED : " + playerRigidbody.velocity.z);
+        }
     }
-    
-    void UpdateWalk()
+
+    public void UpdateWalk()
     {
         //Taking variables from ceybord
+        moveModyfier = 1;
+        moveModyfier += sprintAction.ReadValue<float>()*sprintSpeedModyfier;
         var moveInput = moveAction.ReadValue<Vector2>();
-        var input = new Vector3();
-        input += transform.forward * moveInput.y;
-        input += transform.right * moveInput.x;
-        input = Vector3.ClampMagnitude(input, 1f);
-        input *= movementSpeed;
-        //Making movment smooth
-        var factor = acceleration * Time.deltaTime;
-        //falling slows mowment axeleration
-        if (!controller.isGrounded)
+        if (moveInput != Vector2.zero && grounded)
         {
-            factor = factor / 15;
-        }
-
-        velocity.x = Mathf.Lerp(velocity.x, input.x, factor);
-        velocity.z = Mathf.Lerp(velocity.z, input.z, factor);
-
-
-        controller.Move(velocity * Time.deltaTime);
-    }
-
-    public void TakeDamage(float damage)
-    {
-        health-= damage;
-        healthBar.fillAmount = health/maxHealth;
-        if (health <= 0)
-        {
-            alive = false;
-            Death();
-        }
-    }
-    void Death()
-    {
-        deathPanel.SetActive(true);
-    }
-    void UpdateLook()
-    {
-        //Taking variables from mouse
-        var lookInput = lookAction.ReadValue<Vector2>();
-        look.x += lookInput.x * mouseSensitivity;
-        look.y += lookInput.y * mouseSensitivity;
-        //Restriction on lucking up and down
-        look.y = Mathf.Clamp(look.y, -85f, 85f);
-        //Roteiting camera and player
-        cameraTransform.localRotation = Quaternion.Euler(-look.y, 0, 0);
-        transform.localRotation = Quaternion.Euler(0, look.x, 0);
-    }
-    public void ToMenu()
-    {
-        if(secToExit>0)
-        {
-            secToExit -= Time.deltaTime;
-            exitBar.fillAmount= secToExit/10;
+            animator.SetBool("walking", true);
         }
         else
         {
-            Debug.Log("KONIEC");
-            SceneManager.LoadSceneAsync(0);
+            animator.SetBool("walking", false);
         }
 
+        var moveDirection = new Vector3();
+        moveDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
+
+        //falling slows mowment axeleration
+        if (!grounded)
+        {
+            moveModyfier *= movingFactorWhileFalling;
+        }
+
+        playerRigidbody.AddForce(moveDirection.normalized * movementSpeed * moveModyfier,ForceMode.Acceleration);
+
+    }
+    void PlayerJump()
+    {
+        if (grounded && !playerRigidbody.isKinematic)
+        {
+            playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    internal void GroundState()
+    {
+        throw new NotImplementedException();
     }
 }

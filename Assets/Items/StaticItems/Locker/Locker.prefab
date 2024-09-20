@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8053112462541982306
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.582
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00000011920929
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.842
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.31765577
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9482061
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 142.958
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5862819912850505421, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -2076154978654517779, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_Name
+      value: Locker
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795824672581540946, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795824672581540946, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795824672581540946, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 864455936992386860}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4505076152479501690}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dc1325a22ff1fbb4e8265a93c5300815,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4089974192495130640}
+  m_SourcePrefab: {fileID: 100100000, guid: dc1325a22ff1fbb4e8265a93c5300815, type: 3}
+--- !u!1 &7134562521034995507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dc1325a22ff1fbb4e8265a93c5300815,
+    type: 3}
+  m_PrefabInstance: {fileID: 8053112462541982306}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &864455936992386860
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7134562521034995507}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1cf348f17f2153643920d6afc38548e8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &4505076152479501690
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7134562521034995507}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.57, y: 1.88, z: 0.51}
+  m_Center: {x: 0, y: 0.94, z: 0}
+--- !u!114 &4089974192495130640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7134562521034995507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e122c3ee52c5c674093e0c129de05916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 0}
+  invWidth: 10
+  invHeight: 15
+  tileSize: 50

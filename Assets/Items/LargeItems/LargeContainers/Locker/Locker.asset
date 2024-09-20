@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12d2558791964146980e92b81cdc444, type: 3}
+  m_Name: Locker
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 8005507795414171135, guid: 81881aaff4cb0a14ca9489f5e7ff183a,
+    type: 3}

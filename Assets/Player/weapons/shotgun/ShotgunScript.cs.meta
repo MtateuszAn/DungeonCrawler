@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c7504a31d010dd942a989217b41eb4b6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - muzzleFlash: {fileID: 8435966864564575538, guid: 56c67d4aada0c3944a355ca5e7f4d285,
+      type: 3}
+  - WallHitDecal: {fileID: 2866723108652020911, guid: 887b2a2b886600e4a9b9fd2978e8158d,
+      type: 3}
+  - BloodHitDecal: {fileID: 1000010191825552, guid: 28485ac8ecfcaf440aeaacb950f25e11,
+      type: 3}
+  - playerInput: {instanceID: 0}
+  - barrelL: {instanceID: 0}
+  - barrelR: {instanceID: 0}
+  - wholeGunAnimator: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
